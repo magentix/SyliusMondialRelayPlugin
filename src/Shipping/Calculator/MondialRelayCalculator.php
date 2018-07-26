@@ -60,11 +60,12 @@ final class MondialRelayCalculator implements CalculatorInterface
         $result = $this->pickupRepository->findAll($address->getPostcode(), $address->getCountryCode());
 
         if ($result['error']) {
+            $result['error'] = 'mondial_relay.pickup.list.error.' . $result['error'];
             return $result;
         }
 
         if (!isset($result['response']->PointsRelais->PointRelais_Details)) {
-            $result['error'] = 'mondial_relay.pickup.list.no_result';
+            $result['error'] = 'mondial_relay.pickup.list.error.empty';
             return  $result;
         }
 
@@ -129,7 +130,7 @@ final class MondialRelayCalculator implements CalculatorInterface
      * @param stdClass $pickup
      * @return array
      */
-    public function convert(stdClass $pickup)
+    public function convert(stdClass $pickup): array
     {
         $pickupId = [$pickup->Num, '24R', $pickup->Pays];
 
