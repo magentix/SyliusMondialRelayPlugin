@@ -8,7 +8,7 @@
         "php": "^7.1",
         "sylius/sylius": "~1.2",
         "symfony/symfony": "^3.4|^4.1",
-        "magentix/pickup-plugin": "~1.0"
+        "magentix/pickup-plugin": "dev-master"
     },
     "require-dev": {
         "phpspec/phpspec": "^4.0",
