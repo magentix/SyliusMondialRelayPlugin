@@ -6,3 +6,6 @@ mondial_relay:
             api_company: API Enseigne
             api_reference: API Référence
             api_key: API Clé
+    pickup:
+        list:
+            no_result: Aucun Point Relais n'a été trouvé à proximité de l'adresse indiquée

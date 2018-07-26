@@ -6,4 +6,6 @@ mondial_relay:
             api_company: API Company
             api_reference: API Reference
             api_key: API Key
-
+    pickup:
+        list:
+            no_result: No pickup was found near the specified address

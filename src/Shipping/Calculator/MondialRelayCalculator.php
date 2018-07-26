@@ -59,18 +59,25 @@ final class MondialRelayCalculator implements CalculatorInterface
 
         $result = $this->pickupRepository->findAll($address->getPostcode(), $address->getCountryCode());
 
-        if (!$result['error']) {
-            $pickup = $result['response']->PointsRelais->PointRelais_Details;
-            if (!is_array($pickup)) {
-                $pickup = [$pickup];
-            }
-
-            foreach ($pickup as $data) {
-                $result['pickup'][] = $this->convert($data);
-            }
-
-            unset($result['response']);
+        if ($result['error']) {
+            return $result;
         }
+
+        if (!isset($result['response']->PointsRelais->PointRelais_Details)) {
+            $result['error'] = 'mondial_relay.pickup.list.no_result';
+            return  $result;
+        }
+
+        $pickup = $result['response']->PointsRelais->PointRelais_Details;
+        if (!is_array($pickup)) {
+            $pickup = [$pickup];
+        }
+
+        foreach ($pickup as $data) {
+            $result['pickup'][] = $this->convert($data);
+        }
+
+        unset($result['response']);
 
         return $result;
     }
