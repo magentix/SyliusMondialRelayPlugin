@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@MagentixMondialRelayPlugin/Resources/config/services.yml" }
