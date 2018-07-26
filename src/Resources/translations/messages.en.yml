@@ -1,0 +1,9 @@
+mondial_relay:
+    form:
+        shipping_method:
+            amount: Amount
+            api_wsdl: API WSDL
+            api_company: API Company
+            api_reference: API Reference
+            api_key: API Key
+

@@ -21,7 +21,7 @@ final class MondialRelayConfigurationType extends AbstractType
     {
         $builder
             ->add('amount', MoneyType::class, [
-                'label' => 'mondial.relay.form.shipping_method.amount',
+                'label' => 'mondial_relay.form.shipping_method.amount',
                 'constraints' => [
                     new NotBlank(),
                     new Type(['type' => 'integer']),
@@ -29,28 +29,28 @@ final class MondialRelayConfigurationType extends AbstractType
                 'empty_data' => '0'
             ])
             ->add('api_wsdl', TextType::class, [
-                'label' => 'mondial.relay.form.shipping_method.api_company',
+                'label' => 'mondial_relay.form.shipping_method.api_wsdl',
                 'constraints' => [
                     new NotBlank(),
                 ],
                 'empty_data' => 'https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL'
             ])
             ->add('api_company', TextType::class, [
-                'label' => 'mondial.relay.form.shipping_method.api_company',
+                'label' => 'mondial_relay.form.shipping_method.api_company',
                 'constraints' => [
                     new NotBlank(),
                 ],
                 'empty_data' => 'BDTEST13'
             ])
             ->add('api_reference', TextType::class, [
-                'label' => 'mondial.relay.form.shipping_method.api_reference',
+                'label' => 'mondial_relay.form.shipping_method.api_reference',
                 'constraints' => [
                     new NotBlank(),
                 ],
                 'empty_data' => '11'
             ])
             ->add('api_key', TextType::class, [
-                'label' => 'mondial.relay.form.shipping_method.api_key',
+                'label' => 'mondial_relay.form.shipping_method.api_key',
                 'constraints' => [
                     new NotBlank(),
                 ],
