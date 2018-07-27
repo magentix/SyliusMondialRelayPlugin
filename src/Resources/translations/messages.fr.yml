@@ -10,6 +10,7 @@ mondial_relay:
         list:
             error:
                 empty: Aucun Point Relais n'a été trouvé à proximité de l'adresse indiquée
+                max_size: Le poids maximum de 150kg a été atteint. Merci de sélectionner une autre méthode de livraison.
                 1: Enseigne invalide
                 2: Numéro d'enseigne vide ou inexistant
                 3: Numéro de compte enseigne invalide

@@ -10,6 +10,7 @@ mondial_relay:
         list:
             error:
                 empty: No pickup was found near the specified address
+                max_size: The maximum weight of 150kg has been reached. Please select another delivery method.
                 1: Incorrect merchant
                 2: Merchant number empty
                 3: Incorrect merchant account number

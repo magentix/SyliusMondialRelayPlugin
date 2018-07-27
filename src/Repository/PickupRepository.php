@@ -41,13 +41,15 @@ class PickupRepository extends Soap
     /**
      * @param string $postcode
      * @param string $countryCode
+     * @param string $shippingCode
      * @return array
      */
-    public function findAll(string $postcode, string $countryCode = 'FR'): array
+    public function findAll(string $postcode, string $countryCode = 'FR', string $shippingCode = '24R'): array
     {
         $data = [
             'Pays'            => $countryCode,
             'CP'              => $postcode,
+            'Action'          => $shippingCode,
             'NombreResultats' => 10
         ];
 

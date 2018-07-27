@@ -14,6 +14,12 @@ use stdClass;
 final class MondialRelayCalculator implements CalculatorInterface
 {
 
+    public const MONDIAL_RELAY_CODE_24R = '24R';
+
+    public const MONDIAL_RELAY_CODE_24L = '24L';
+
+    public const MONDIAL_RELAY_CODE_DRI = 'DRI';
+
     /**
      * @var PickupRepository $pickupRepository
      */
@@ -57,7 +63,26 @@ final class MondialRelayCalculator implements CalculatorInterface
     {
         $this->pickupRepository->setConfig($configuration);
 
-        $result = $this->pickupRepository->findAll($address->getPostcode(), $address->getCountryCode());
+        $shippingWeight = $cart->getShipments()->current()->getShippingWeight();
+
+        if ($shippingWeight > 150) {
+            $result['error'] = 'mondial_relay.pickup.list.error.max_size';
+            return  $result;
+        }
+
+        $shippingCode = self::MONDIAL_RELAY_CODE_24R;
+        if ($shippingWeight > 30) {
+            $shippingCode = self::MONDIAL_RELAY_CODE_24L;
+        }
+        if ($shippingWeight > 50) {
+            $shippingCode = self::MONDIAL_RELAY_CODE_DRI;
+        }
+
+        $result = $this->pickupRepository->findAll(
+            $address->getPostcode(),
+            $address->getCountryCode(),
+            $shippingCode
+        );
 
         if ($result['error']) {
             $result['error'] = 'mondial_relay.pickup.list.error.' . $result['error'];
