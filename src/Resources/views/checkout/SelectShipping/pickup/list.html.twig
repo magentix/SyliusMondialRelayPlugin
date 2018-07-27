@@ -5,7 +5,7 @@
         <form class="item pickup-address" action="#">
             <div class="field">
                 <label for="pickup_postcode_{{ method.method }}">{{ 'pickup.form.shipment.list.postcode' | trans }}</label>
-                <input type="text" name="postcode" value="{{ method.pickup_postcode }}" id="pickup_postcode_{{ method.method }}" />
+                <input type="text" name="postcode" value="{{ method.pickup_address.getPostcode() }}" id="pickup_postcode_{{ method.method }}" />
             </div>
             <div class="field">
                 <button type="submit" class="ui large primary icon labeled button">
