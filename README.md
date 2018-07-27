@@ -3,6 +3,8 @@
 * This Plugin allows to add the Mondial Relay delivery method.
 * Plugin is under development.
 
+![Alt text](doc/images/shipping.png "Mondial Relay Shipping Method")
+
 ## Installation
 
 Add needed repositories to the `composer.json` file:
@@ -79,4 +81,13 @@ Deploy Assets:
 php bin/console sylius:theme:assets:install
 ```
 
-Finally, in *Shipping Method* section from admin, add new Method with *Mondial Relay Pickup* Calculator.
+Finally, in *Shipping Method* section from admin, add new Method with *Mondial Relay* Calculator.
+
+## Configuration
+
+* Shipping charges
+  * **Calculator**: Mondial Relay
+      * **API WSDL**: https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL
+      * **API Company**: BDTEST13 (test mode)
+      * **API Reference**: 11 (test mode)
+      * **API Key**: PrivateK (test mode)
