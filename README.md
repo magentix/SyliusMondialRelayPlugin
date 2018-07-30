@@ -1,7 +1,6 @@
 ## Notes
 
 * This Plugin allows to add the Mondial Relay delivery method.
-* Plugin is under development.
 
 ## Screenshot
 
