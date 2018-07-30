@@ -2,7 +2,7 @@
     "name": "magentix/mondial-relay-plugin",
     "type": "sylius-plugin",
     "description": "Mondial Relay Shipping plugin for Sylius.",
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "version": "1.0.0",
     "require": {
         "php": "^7.1",
