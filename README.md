@@ -9,36 +9,8 @@
 
 ## Installation
 
-Add needed repositories to the `composer.json` file:
-
-```json
-"repositories": {
-    ...
-    "magentix/pickup-plugin": {
-        "type": "vcs",
-        "url": "https://github.com/magentix/pickup-plugin.git"
-    },
-    "magentix/mondial-relay-plugin": {
-        "type": "vcs",
-        "url": "https://github.com/magentix/mondial-relay-plugin.git"
-    }
-}
-```
-
-Add new packages to the `composer.json` file:
-
-```json
-"require": {
-    ...
-    "magentix/pickup-plugin": "dev-master",
-    "magentix/mondial-relay-plugin": "dev-master"
-},
-```
-
-Then update:
-
 ```bash
-$ composer update
+$ composer require magentix/mondial-relay-plugin
 ```
 
 Add plugin dependencies to your `AppKernel.php` file:
