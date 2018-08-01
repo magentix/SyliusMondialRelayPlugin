@@ -2,15 +2,18 @@ mondial_relay:
     form:
         shipping_method:
             amount: Montant
+        shipping_gateway:
             api_wsdl: API WSDL
             api_company: API Enseigne
             api_reference: API Référence
             api_key: API Clé
+            number: Nombre de Points Relais
     pickup:
         list:
             error:
                 empty: Aucun Point Relais n'a été trouvé à proximité de l'adresse indiquée
                 max_size: Le poids maximum de 150kg a été atteint. Merci de sélectionner une autre méthode de livraison.
+                gateway: Aucune passerelle n'est configurée
                 1: Enseigne invalide
                 2: Numéro d'enseigne vide ou inexistant
                 3: Numéro de compte enseigne invalide

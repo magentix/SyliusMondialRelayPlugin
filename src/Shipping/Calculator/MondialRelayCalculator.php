@@ -11,6 +11,7 @@ namespace MagentixMondialRelayPlugin\Shipping\Calculator;
 
 use MagentixPickupPlugin\Shipping\Calculator\CalculatorInterface;
 use MagentixMondialRelayPlugin\Repository\PickupRepository;
+use BitBag\SyliusShippingExportPlugin\Repository\ShippingGatewayRepository;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -32,12 +33,20 @@ final class MondialRelayCalculator implements CalculatorInterface
     private $pickupRepository;
 
     /**
+     * @var ShippingGatewayRepository $shippingGatewayRepository
+     */
+    private $shippingGatewayRepository;
+
+    /**
      * @param PickupRepository $pickupRepository
+     * @param ShippingGatewayRepository $shippingGatewayRepository
      */
     public function __construct(
-        PickupRepository $pickupRepository
+        PickupRepository $pickupRepository,
+        ShippingGatewayRepository $shippingGatewayRepository
     ) {
         $this->pickupRepository = $pickupRepository;
+        $this->shippingGatewayRepository = $shippingGatewayRepository;
     }
 
     /**
@@ -70,7 +79,15 @@ final class MondialRelayCalculator implements CalculatorInterface
         OrderInterface $cart,
         ShippingMethodInterface $shippingMethod): array
     {
-        $this->pickupRepository->setConfig($shippingMethod->getConfiguration());
+        $gateway = $this->shippingGatewayRepository->findOneByShippingMethod($shippingMethod);
+
+        if (!$gateway) {
+            $result['error'] = 'mondial_relay.pickup.list.error.gateway';
+            return  $result;
+        }
+
+        $configuration = $gateway->getConfig();
+        $this->pickupRepository->setConfig($configuration);
 
         $shippingWeight = $cart->getShipments()->current()->getShippingWeight();
 
@@ -79,18 +96,11 @@ final class MondialRelayCalculator implements CalculatorInterface
             return  $result;
         }
 
-        $shippingCode = self::MONDIAL_RELAY_CODE_24R;
-        if ($shippingWeight > 30) {
-            $shippingCode = self::MONDIAL_RELAY_CODE_24L;
-        }
-        if ($shippingWeight > 50) {
-            $shippingCode = self::MONDIAL_RELAY_CODE_DRI;
-        }
-
         $result = $this->pickupRepository->findAll(
             $address->getPostcode(),
             $address->getCountryCode(),
-            $shippingCode
+            $this->getShippingCode($shippingWeight),
+            (int) $configuration['number']
         );
 
         if ($result['error']) {
@@ -128,7 +138,9 @@ final class MondialRelayCalculator implements CalculatorInterface
     {
         list($id, $code, $country) = explode('-', $pickupId);
 
-        $this->pickupRepository->setConfig($shippingMethod->getConfiguration());
+        $gateway = $this->shippingGatewayRepository->findOneByShippingMethod($shippingMethod);
+
+        $this->pickupRepository->setConfig($gateway->getConfig());
 
         $result = $this->pickupRepository->find($id, $country);
 
@@ -179,5 +191,24 @@ final class MondialRelayCalculator implements CalculatorInterface
             'latitude'   => $pickup->Latitude,
             'longitude'  => $pickup->Longitude
         ];
+    }
+
+    /**
+     * Retrieve Shipping Code
+     *
+     * @param float $weight
+     * @return string
+     */
+    public function getShippingCode(float $weight): string
+    {
+        $shippingCode = self::MONDIAL_RELAY_CODE_24R;
+        if ($weight > 30) {
+            $shippingCode = self::MONDIAL_RELAY_CODE_24L;
+        }
+        if ($weight > 50) {
+            $shippingCode = self::MONDIAL_RELAY_CODE_DRI;
+        }
+
+        return $shippingCode;
     }
 }

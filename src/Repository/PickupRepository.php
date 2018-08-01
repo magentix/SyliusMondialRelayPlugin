@@ -47,15 +47,20 @@ class PickupRepository extends Soap
      * @param string $postcode
      * @param string $countryCode
      * @param string $shippingCode
+     * @param int $number
      * @return array
      */
-    public function findAll(string $postcode, string $countryCode = 'FR', string $shippingCode = '24R'): array
+    public function findAll(
+        string $postcode,
+        string $countryCode = 'FR',
+        string $shippingCode = '24R',
+        int $number = 10): array
     {
         $data = [
             'Pays'            => $countryCode,
             'CP'              => $postcode,
             'Action'          => $shippingCode,
-            'NombreResultats' => 10
+            'NombreResultats' => $number
         ];
 
         return $this->execute('WSI4_PointRelais_Recherche', $data, $this->config);

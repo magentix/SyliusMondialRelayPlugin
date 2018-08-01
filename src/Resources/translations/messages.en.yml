@@ -2,15 +2,18 @@ mondial_relay:
     form:
         shipping_method:
             amount: Amount
+        shipping_gateway:
             api_wsdl: API WSDL
             api_company: API Company
             api_reference: API Reference
             api_key: API Key
+            number: Number of pickup
     pickup:
         list:
             error:
                 empty: No pickup was found near the specified address
                 max_size: The maximum weight of 150kg has been reached. Please select another delivery method.
+                gateway: No gateway is configured
                 1: Incorrect merchant
                 2: Merchant number empty
                 3: Incorrect merchant account number

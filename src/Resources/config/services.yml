@@ -6,6 +6,7 @@ services:
         class: MagentixMondialRelayPlugin\Shipping\Calculator\MondialRelayCalculator
         arguments:
             - '@magentix_mondial_relay_plugin.repository.pickup'
+            - '@bitbag.repository.shipping_gateway'
         public: true
         tags:
             - { name: sylius.shipping_calculator, calculator: mondial_relay, form_type: MagentixMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType, label: "Mondial Relay" }
@@ -14,3 +15,8 @@ services:
         class: MagentixMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType
         tags:
             - { name: form.type }
+
+    app.form.type.mondial_relay_shipping_gateway:
+        class: MagentixMondialRelayPlugin\Form\Type\Shipping\Gateway\MondialRelayShippingGatewayType
+        tags:
+            - { name: bitbag.shipping_gateway_configuration_type, type: "mondial_relay_shipping_gateway", label: "Mondial Relay Gateway" }

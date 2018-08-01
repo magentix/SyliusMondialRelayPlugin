@@ -32,34 +32,6 @@ final class MondialRelayConfigurationType extends AbstractType
                     new Type(['type' => 'integer']),
                 ],
                 'empty_data' => '0'
-            ])
-            ->add('api_wsdl', TextType::class, [
-                'label' => 'mondial_relay.form.shipping_method.api_wsdl',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'empty_data' => 'https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL'
-            ])
-            ->add('api_company', TextType::class, [
-                'label' => 'mondial_relay.form.shipping_method.api_company',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'empty_data' => 'BDTEST13'
-            ])
-            ->add('api_reference', TextType::class, [
-                'label' => 'mondial_relay.form.shipping_method.api_reference',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'empty_data' => '11'
-            ])
-            ->add('api_key', TextType::class, [
-                'label' => 'mondial_relay.form.shipping_method.api_key',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'empty_data' => 'PrivateK'
             ]);
     }
 
