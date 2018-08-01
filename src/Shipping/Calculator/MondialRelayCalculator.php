@@ -14,6 +14,7 @@ use MagentixMondialRelayPlugin\Repository\PickupRepository;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\ShippingMethodInterface;
 use stdClass;
 
 final class MondialRelayCalculator implements CalculatorInterface
@@ -61,12 +62,15 @@ final class MondialRelayCalculator implements CalculatorInterface
      *
      * @param AddressInterface $address
      * @param OrderInterface $cart
-     * @param array $configuration
+     * @param ShippingMethodInterface $shippingMethod
      * @return array
      */
-    public function getPickupList(AddressInterface $address, OrderInterface $cart, array $configuration): array
+    public function getPickupList(
+        AddressInterface $address,
+        OrderInterface $cart,
+        ShippingMethodInterface $shippingMethod): array
     {
-        $this->pickupRepository->setConfig($configuration);
+        $this->pickupRepository->setConfig($shippingMethod->getConfiguration());
 
         $shippingWeight = $cart->getShipments()->current()->getShippingWeight();
 
@@ -117,14 +121,14 @@ final class MondialRelayCalculator implements CalculatorInterface
      * Retrieve pickup address
      *
      * @param string $pickupId
-     * @param array $configuration
+     * @param ShippingMethodInterface $shippingMethod
      * @return array
      */
-    public function getPickupAddress(string $pickupId, array $configuration): array
+    public function getPickupAddress(string $pickupId, ShippingMethodInterface $shippingMethod): array
     {
         list($id, $code, $country) = explode('-', $pickupId);
 
-        $this->pickupRepository->setConfig($configuration);
+        $this->pickupRepository->setConfig($shippingMethod->getConfiguration());
 
         $result = $this->pickupRepository->find($id, $country);
 
