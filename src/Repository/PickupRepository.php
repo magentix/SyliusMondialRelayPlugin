@@ -29,6 +29,8 @@ class PickupRepository extends Soap
     }
 
     /**
+     * Find pickup with identifier
+     *
      * @param string $pickupId
      * @param string $countryCode
      * @return array
@@ -44,6 +46,8 @@ class PickupRepository extends Soap
     }
 
     /**
+     * Find list of pickup near country and postcode
+     *
      * @param string $postcode
      * @param string $countryCode
      * @param string $shippingCode
@@ -64,5 +68,27 @@ class PickupRepository extends Soap
         ];
 
         return $this->execute('WSI4_PointRelais_Recherche', $data, $this->config);
+    }
+
+    /**
+     * Create Shipping
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createShipping(array $data): array
+    {
+        return $this->execute('WSI2_CreationExpedition', $data, $this->config);
+    }
+
+    /**
+     * Retrieve label
+     *
+     * @param array $data
+     * @return array
+     */
+    public function getLabel(array $data): array
+    {
+        return $this->execute('WSI3_GetEtiquettes', $data, $this->config);
     }
 }

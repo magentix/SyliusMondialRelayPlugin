@@ -12,10 +12,12 @@ namespace MagentixMondialRelayPlugin\Shipping\Calculator;
 use MagentixPickupPlugin\Shipping\Calculator\CalculatorInterface;
 use MagentixMondialRelayPlugin\Repository\PickupRepository;
 use BitBag\SyliusShippingExportPlugin\Repository\ShippingGatewayRepository;
+use Sylius\Component\Core\Exception\MissingChannelConfigurationException;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShippingMethodInterface;
+use Webmozart\Assert\Assert;
 use stdClass;
 
 final class MondialRelayCalculator implements CalculatorInterface
@@ -54,8 +56,17 @@ final class MondialRelayCalculator implements CalculatorInterface
      */
     public function calculate(ShipmentInterface $subject, array $configuration): int
     {
-        // $subject->getShippingWeight();
-        return (int) $configuration['amount'];
+        Assert::isInstanceOf($subject, ShipmentInterface::class);
+
+        $weight = $subject->getShippingWeight();
+
+        foreach ($configuration['ranges'] as $range) {
+            if ($range['fromValue'] <= $weight && $weight < $range['toValue']) {
+                return (int) $range['amount'];
+            }
+        }
+
+        return 0;
     }
 
     /**
@@ -96,11 +107,13 @@ final class MondialRelayCalculator implements CalculatorInterface
             return  $result;
         }
 
+        $shippingCode = $this->getShippingCode($shippingWeight);
+
         $result = $this->pickupRepository->findAll(
             $address->getPostcode(),
             $address->getCountryCode(),
-            $this->getShippingCode($shippingWeight),
-            (int) $configuration['number']
+            $shippingCode,
+            (int) $configuration['pickup_number']
         );
 
         if ($result['error']) {
@@ -119,7 +132,7 @@ final class MondialRelayCalculator implements CalculatorInterface
         }
 
         foreach ($pickup as $data) {
-            $result['pickup'][] = $this->convert($data);
+            $result['pickup'][] = $this->convert($data, $shippingCode);
         }
 
         unset($result['response']);
@@ -136,7 +149,7 @@ final class MondialRelayCalculator implements CalculatorInterface
      */
     public function getPickupAddress(string $pickupId, ShippingMethodInterface $shippingMethod): array
     {
-        list($id, $code, $country) = explode('-', $pickupId);
+        list($id, $shippingCode, $country) = explode('-', $pickupId);
 
         $gateway = $this->shippingGatewayRepository->findOneByShippingMethod($shippingMethod);
 
@@ -151,7 +164,7 @@ final class MondialRelayCalculator implements CalculatorInterface
             }
 
             foreach ($pickup as $data) {
-                $result['pickup'] = $this->convert($data);
+                $result['pickup'] = $this->convert($data, $shippingCode);
             }
 
             unset($result['response']);
@@ -174,11 +187,12 @@ final class MondialRelayCalculator implements CalculatorInterface
      * Convert pickup list for print
      *
      * @param stdClass $pickup
+     * @param string $shippingCode
      * @return array
      */
-    public function convert(stdClass $pickup): array
+    public function convert(stdClass $pickup, string $shippingCode): array
     {
-        $pickupId = [$pickup->Num, '24R', $pickup->Pays];
+        $pickupId = [$pickup->Num, $shippingCode, $pickup->Pays];
 
         return [
             'id'         => join('-', $pickupId),

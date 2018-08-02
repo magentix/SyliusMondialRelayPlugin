@@ -10,29 +10,47 @@ declare(strict_types=1);
 namespace MagentixMondialRelayPlugin\Form\Type\Shipping\Calculator;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 
 final class MondialRelayConfigurationType extends AbstractType
 {
+
+    /**
+     * @var AbstractType $rangeType
+     */
+    protected $rangeType;
+
+    /**
+     * WeightRangeConfigurationType constructor.
+     *
+     * @param AbstractType $rangeType
+     */
+    public function __construct(AbstractType $rangeType)
+    {
+        $this->rangeType = $rangeType;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('amount', MoneyType::class, [
+            ->add('ranges', CollectionType::class, [
                 'label' => 'mondial_relay.form.shipping_method.amount',
-                'constraints' => [
-                    new NotBlank(),
-                    new Type(['type' => 'integer']),
+                'entry_type' => get_class($this->rangeType),
+                'entry_options' => [
+                    'attr' => [
+                        'class' => 'three fields',
+                    ],
                 ],
-                'empty_data' => '0'
-            ]);
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
+        ;
     }
 
     /**
@@ -40,13 +58,12 @@ final class MondialRelayConfigurationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults(
-            [
+        $resolver
+            ->setDefaults([
                 'data_class' => null,
-            ]
-        );
+                'ranges' => [],
+            ])
+        ;
     }
 
     /**

@@ -22,6 +22,7 @@ public function registerBundles()
     $bundles = [
         ...
         new \MagentixPickupPlugin\MagentixPickupPlugin(),
+        new \BitBag\SyliusShippingExportPlugin\BitBagSyliusShippingExportPlugin(),
         new \MagentixMondialRelayPlugin\MagentixMondialRelayPlugin(),
     ];
 }
@@ -35,6 +36,7 @@ Import required config in your `app/config/config.yml` file:
 imports:
     ...
     - { resource: "@MagentixPickupPlugin/Resources/config/config.yml" }
+    - { resource: "@BitBagSyliusShippingExportPlugin/Resources/config/config.yml" }
     - { resource: "@MagentixMondialRelayPlugin/Resources/config/config.yml" }
 ```
     
@@ -46,6 +48,10 @@ Import routing in your `app/config/routing.yml` file:
 
 magentix_pickup_plugin:
     resource: "@MagentixPickupPlugin/Resources/config/routing.yml"
+    
+bitbag_shipping_export_plugin:
+    resource: "@BitBagSyliusShippingExportPlugin/Resources/config/routing.yml"
+    prefix: /admin
 ```
 
 Deploy Assets:
@@ -54,13 +60,15 @@ Deploy Assets:
 php bin/console sylius:theme:assets:install
 ```
 
-Finally, in *Shipping Method* section from admin, add new Method with *Mondial Relay* Calculator.
-
 ## Configuration
 
-* Shipping charges
-  * **Calculator**: Mondial Relay
-      * **API WSDL**: https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL
-      * **API Company**: BDTEST13 (test mode)
-      * **API Reference**: 11 (test mode)
-      * **API Key**: PrivateK (test mode)
+In *Shipping Method* section from admin, add and configure new Method with *Mondial Relay* Calculator.
+
+In *Shipping Gateway* section from admin, add and configure new Gateway with *Mondial Relay* Shipping Method.
+
+**API test**
+
+* **API WSDL**: https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL
+* **API Company**: BDTEST13 (test mode)
+* **API Reference**: 11 (test mode)
+* **API Key**: PrivateK (test mode)

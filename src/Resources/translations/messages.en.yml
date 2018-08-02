@@ -2,12 +2,25 @@ mondial_relay:
     form:
         shipping_method:
             amount: Amount
+            weight_from: Weight From
+            weight_to: Weight To
         shipping_gateway:
             api_wsdl: API WSDL
             api_company: API Company
             api_reference: API Reference
             api_key: API Key
-            number: Number of pickup
+            pickup_number: Number of pickup
+            label_generate: Generate label
+            label_size: Label Size
+            label_shipper_company: Shipper Company
+            label_shipper_street: Shipper Street
+            label_shipper_city: Shipper City
+            label_shipper_postcode: Shipper Postcode
+            label_shipper_country_code: Shipper Country
+            label_shipper_phone_number: Shipper Phone Number
+            label_shipper_email: Shipper Email
+            no: No
+            yes: Yes
     pickup:
         list:
             error:

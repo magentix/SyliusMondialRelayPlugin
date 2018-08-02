@@ -1,3 +1,7 @@
+parameters:
+    bitbag.shipping_gateway.validation_groups: ['bitbag']
+    bitbag.shipping_labels_path: '%kernel.root_dir%/../shipping_labels'
+
 services:
     magentix_mondial_relay_plugin.repository.pickup:
         class: MagentixMondialRelayPlugin\Repository\PickupRepository
@@ -13,6 +17,14 @@ services:
 
     app.form.type.shipping_calculator.magentix_mondial_relay:
         class: MagentixMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType
+        arguments:
+            - '@mondial_relay_shipping_rates.form.type.weight'
+        tags:
+            - { name: form.type }
+
+    mondial_relay_shipping_rates.form.type.weight:
+        class: MagentixMondialRelayPlugin\Form\Type\Shipping\WeightType
+        public: true
         tags:
             - { name: form.type }
 
@@ -20,3 +32,11 @@ services:
         class: MagentixMondialRelayPlugin\Form\Type\Shipping\Gateway\MondialRelayShippingGatewayType
         tags:
             - { name: bitbag.shipping_gateway_configuration_type, type: "mondial_relay_shipping_gateway", label: "Mondial Relay Gateway" }
+
+    app.event_listener.mondial_relay_shipping_export:
+      class: MagentixMondialRelayPlugin\EventListener\MondialRelayShippingExportEventListener
+      arguments:
+          - '@magentix_mondial_relay_plugin.repository.pickup'
+          - '@doctrine.orm.entity_manager'
+      tags:
+          - { name: kernel.event_listener, event: 'bitbag.export_shipment', method: exportShipment }
