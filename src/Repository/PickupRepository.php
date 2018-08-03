@@ -58,8 +58,8 @@ class PickupRepository extends Soap
         string $postcode,
         string $countryCode = 'FR',
         string $shippingCode = '24R',
-        int $number = 10): array
-    {
+        int $number = 10
+    ): array {
         $data = [
             'Pays'            => $countryCode,
             'CP'              => $postcode,

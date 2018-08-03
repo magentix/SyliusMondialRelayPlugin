@@ -15,6 +15,7 @@ use BitBag\SyliusShippingExportPlugin\Entity\ShippingExportInterface;
 use BitBag\SyliusShippingExportPlugin\Entity\ShippingGatewayInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
+use MagentixPickupPlugin\Entity\Shipment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -65,7 +66,7 @@ final class MondialRelayShippingExportEventListener
 
         if ($configuration['label_generate'] === 1) {
             /* Create Shipment in Mondial Relay database */
-            $result = $this->createShipping($order, $configuration);
+            $result = $this->createShipping($order, $shipment, $configuration);
 
             if ($result['error']) {
                 $event->addErrorFlash('mondial_relay.pickup.list.error.' . $result['error']);
@@ -89,7 +90,7 @@ final class MondialRelayShippingExportEventListener
             $labelSize = $configuration['label_size'];
             $label = file_get_contents('https://www.mondialrelay.fr' . $result['response']->$labelSize);
 
-            $event->saveShippingLabel($label,'pdf');
+            $event->saveShippingLabel($label, 'pdf');
         }
 
         $shipment->setState(ShipmentInterface::STATE_SHIPPED);
@@ -106,19 +107,21 @@ final class MondialRelayShippingExportEventListener
      * Retrieve Shipping Label content
      *
      * @param OrderInterface $order
+     * @param Shipment|ShipmentInterface $shipment
      * @param array $configuration
      * @return array
      */
-    protected function createShipping(OrderInterface $order, array $configuration): array
+    protected function createShipping(OrderInterface $order, ShipmentInterface $shipment, array $configuration): array
     {
-        /** @var  $shipment */
-        $shipment = $order->getShipments()->current();
-
         $shippingAddress = $order->getShippingAddress();
 
         list($id, $code, $country) = explode('-', $shipment->getPickupId());
 
-        $weight = $shipment->getShippingWeight() * 1000;
+        if (!isset($configuration['product_weight'])) {
+            $configuration['product_weight'] = 1;
+        }
+
+        $weight = ($shipment->getShippingWeight() * 1000) / $configuration['product_weight'];
 
         $data = [
             'ModeCol'      => 'CCC',
@@ -147,13 +150,13 @@ final class MondialRelayShippingExportEventListener
             'Dest_Tel1'    => $shippingAddress->getPhoneNumber(),
             'Dest_Tel2'    => '',
             'Dest_Mail'    => $order->getCustomer()->getEmail(),
-            'Poids'        => $weight ?: 1000,
+            'Poids'        => $weight,
             'NbColis'      => 1,
             'CRT_Valeur'   => 0,
             'CRT_Devise'   => '',
             'Exp_Valeur'   => '',
             'Exp_Devise'   => '',
-            'COL_Rel_Pays' => 'FR',
+            'COL_Rel_Pays' => $configuration['label_shipper_country_code'],
             'COL_Rel'      => 0,
             'LIV_Rel_Pays' => $country,
             'LIV_Rel'      => $id,

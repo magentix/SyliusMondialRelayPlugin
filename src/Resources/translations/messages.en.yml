@@ -10,6 +10,9 @@ mondial_relay:
             api_reference: API Reference
             api_key: API Key
             pickup_number: Number of pickup
+            product_weight: Product Weight
+            kilogram: Kilogram
+            gram: Gram
             label_generate: Generate label
             label_size: Label Size
             label_shipper_company: Shipper Company

@@ -70,6 +70,18 @@ final class MondialRelayShippingGatewayType extends AbstractType
                 ],
                 'empty_data' => '10'
             ])
+            ->add('product_weight', ChoiceType::class, [
+                'label' => 'mondial_relay.form.shipping_gateway.product_weight',
+                'constraints' => [
+                    new NotBlank([
+                        'groups' => 'bitbag',
+                    ]),
+                ],
+                'choices' => [
+                    'mondial_relay.form.shipping_gateway.kilogram' => 1,
+                    'mondial_relay.form.shipping_gateway.gram'     => 1000,
+                ],
+            ])
             ->add('label_generate', ChoiceType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_generate',
                 'constraints' => [

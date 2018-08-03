@@ -12,7 +12,6 @@ namespace MagentixMondialRelayPlugin\Shipping\Calculator;
 use MagentixPickupPlugin\Shipping\Calculator\CalculatorInterface;
 use MagentixMondialRelayPlugin\Repository\PickupRepository;
 use BitBag\SyliusShippingExportPlugin\Repository\ShippingGatewayRepository;
-use Sylius\Component\Core\Exception\MissingChannelConfigurationException;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -88,8 +87,8 @@ final class MondialRelayCalculator implements CalculatorInterface
     public function getPickupList(
         AddressInterface $address,
         OrderInterface $cart,
-        ShippingMethodInterface $shippingMethod): array
-    {
+        ShippingMethodInterface $shippingMethod
+    ): array {
         $gateway = $this->shippingGatewayRepository->findOneByShippingMethod($shippingMethod);
 
         if (!$gateway) {
@@ -102,12 +101,16 @@ final class MondialRelayCalculator implements CalculatorInterface
 
         $shippingWeight = $cart->getShipments()->current()->getShippingWeight();
 
-        if ($shippingWeight > 150) {
+        if (!isset($configuration['product_weight'])) {
+            $configuration['product_weight'] = 1;
+        }
+
+        if ($shippingWeight > (150 * $configuration['product_weight'])) {
             $result['error'] = 'mondial_relay.pickup.list.error.max_size';
             return  $result;
         }
 
-        $shippingCode = $this->getShippingCode($shippingWeight);
+        $shippingCode = $this->getShippingCode($shippingWeight, $configuration['product_weight']);
 
         $result = $this->pickupRepository->findAll(
             $address->getPostcode(),
@@ -211,15 +214,16 @@ final class MondialRelayCalculator implements CalculatorInterface
      * Retrieve Shipping Code
      *
      * @param float $weight
+     * @param float $weightRate
      * @return string
      */
-    public function getShippingCode(float $weight): string
+    public function getShippingCode(float $weight, float $weightRate = 1): string
     {
         $shippingCode = self::MONDIAL_RELAY_CODE_24R;
-        if ($weight > 30) {
+        if ($weight > (30 * $weightRate)) {
             $shippingCode = self::MONDIAL_RELAY_CODE_24L;
         }
-        if ($weight > 50) {
+        if ($weight > (50 * $weightRate)) {
             $shippingCode = self::MONDIAL_RELAY_CODE_DRI;
         }
 
