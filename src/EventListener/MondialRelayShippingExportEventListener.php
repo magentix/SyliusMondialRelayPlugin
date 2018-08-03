@@ -128,7 +128,7 @@ final class MondialRelayShippingExportEventListener
             'ModeLiv'      => $code,
             'NDossier'     => $order->getNumber(),
             'NClient'      => $order->getCustomer()->getId(),
-            'Expe_Langage' => $order->getShippingAddress()->getCountryCode(),
+            'Expe_Langage' => $this->getLanguage($configuration['label_shipper_country_code']),
             'Expe_Ad1'     => $configuration['label_shipper_company'],
             'Expe_Ad2'     => '',
             'Expe_Ad3'     => $configuration['label_shipper_street'],
@@ -139,7 +139,7 @@ final class MondialRelayShippingExportEventListener
             'Expe_Tel1'    => $configuration['label_shipper_phone_number'],
             'Expe_Tel2'    => '',
             'Expe_Mail'    => $configuration['label_shipper_email'],
-            'Dest_Langage' => $shippingAddress->getCountryCode(),
+            'Dest_Langage' => $this->getLanguage($shippingAddress->getCountryCode()),
             'Dest_Ad1'     => $shippingAddress->getFullName(),
             'Dest_Ad2'     => $shippingAddress->getCompany(),
             'Dest_Ad3'     => $shippingAddress->getStreet(),
@@ -171,6 +171,28 @@ final class MondialRelayShippingExportEventListener
         $this->pickupRepository->setConfig($configuration);
 
         return $this->pickupRepository->createShipping($data);
+    }
+
+    /**
+     * Retrieve country language
+     *
+     * @param string $country
+     * @return string
+     */
+    protected function getLanguage(string $country): string
+    {
+        $languages = [
+            'FR' => 'FR',
+            'BE' => 'NL',
+            'ES' => 'ES',
+        ];
+
+        $language = 'FR';
+        if (isset($languages[$country])) {
+            $language = $languages[$country];
+        }
+
+        return $language;
     }
 
     /**
