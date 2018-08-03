@@ -1,6 +1,14 @@
-## Notes
+## Features
 
-* This Plugin allows to add the Mondial Relay delivery method.
+This Plugin allows to add the Mondial Relay delivery method to Sylius.
+
+* Mondial Relay Pick-up delivery up to 150kg (24R, 24L, DRI)
+
+* Direct shipping management through Mondial Relay web services (shipments registration, shipping labels downloading)
+
+## Overview
+
+With over 40 million parcels delivered through its network of 6500 pick-up points in France (and more than 36000 in Europe) and home delivery services, Mondial Relay is a major actor of delivery to companies and individuals. Thousands of merchants use their services as well as the total control of the logistics process that Mondial Relay offers.
 
 ## Screenshot
 
