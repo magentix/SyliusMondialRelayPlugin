@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace MagentixMondialRelayPlugin\Repository;
+namespace Magentix\SyliusMondialRelayPlugin\Repository;
 
-use MagentixMondialRelayPlugin\Model\Soap;
+use Magentix\SyliusMondialRelayPlugin\Model\Soap;
 
 class PickupRepository extends Soap
 {

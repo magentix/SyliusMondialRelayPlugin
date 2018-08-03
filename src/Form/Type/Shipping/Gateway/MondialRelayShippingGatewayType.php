@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace MagentixMondialRelayPlugin\Form\Type\Shipping\Gateway;
+namespace Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Gateway;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

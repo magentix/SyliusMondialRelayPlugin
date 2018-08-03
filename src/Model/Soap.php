@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace MagentixMondialRelayPlugin\Model;
+namespace Magentix\SyliusMondialRelayPlugin\Model;
 
 use SoapClient;
 use SoapFault;

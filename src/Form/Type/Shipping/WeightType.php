@@ -7,7 +7,7 @@
  */
 declare(strict_types = 1);
 
-namespace MagentixMondialRelayPlugin\Form\Type\Shipping;
+namespace Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

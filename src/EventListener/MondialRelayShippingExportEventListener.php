@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace MagentixMondialRelayPlugin\EventListener;
+namespace Magentix\SyliusMondialRelayPlugin\EventListener;
 
-use MagentixMondialRelayPlugin\Repository\PickupRepository;
+use Magentix\SyliusMondialRelayPlugin\Repository\PickupRepository;
 use BitBag\SyliusShippingExportPlugin\Event\ExportShipmentEvent;
 use BitBag\SyliusShippingExportPlugin\Entity\ShippingExportInterface;
 use BitBag\SyliusShippingExportPlugin\Entity\ShippingGatewayInterface;

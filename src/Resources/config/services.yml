@@ -3,40 +3,40 @@ parameters:
     bitbag.shipping_labels_path: '%kernel.root_dir%/../shipping_labels'
 
 services:
-    magentix_mondial_relay_plugin.repository.pickup:
-        class: MagentixMondialRelayPlugin\Repository\PickupRepository
+    magentix_sylius_mondial_relay_plugin.repository.pickup:
+        class: Magentix\SyliusMondialRelayPlugin\Repository\PickupRepository
 
-    app.shipping_calculator.mondial_relay:
-        class: MagentixMondialRelayPlugin\Shipping\Calculator\MondialRelayCalculator
-        arguments:
-            - '@magentix_mondial_relay_plugin.repository.pickup'
-            - '@bitbag.repository.shipping_gateway'
+    magentix_sylius_mondial_relay_shipping_rates.form.type.weight:
+        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\WeightType
         public: true
-        tags:
-            - { name: sylius.shipping_calculator, calculator: mondial_relay, form_type: MagentixMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType, label: "Mondial Relay" }
-
-    app.form.type.shipping_calculator.magentix_mondial_relay:
-        class: MagentixMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType
-        arguments:
-            - '@mondial_relay_shipping_rates.form.type.weight'
         tags:
             - { name: form.type }
 
-    mondial_relay_shipping_rates.form.type.weight:
-        class: MagentixMondialRelayPlugin\Form\Type\Shipping\WeightType
+    app.shipping_calculator.mondial_relay:
+        class: Magentix\SyliusMondialRelayPlugin\Shipping\Calculator\MondialRelayCalculator
+        arguments:
+            - '@magentix_sylius_mondial_relay_plugin.repository.pickup'
+            - '@bitbag.repository.shipping_gateway'
         public: true
+        tags:
+            - { name: sylius.shipping_calculator, calculator: mondial_relay, form_type: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType, label: "Mondial Relay" }
+
+    app.form.type.shipping_calculator.magentix_mondial_relay:
+        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType
+        arguments:
+            - '@magentix_sylius_mondial_relay_shipping_rates.form.type.weight'
         tags:
             - { name: form.type }
 
     app.form.type.mondial_relay_shipping_gateway:
-        class: MagentixMondialRelayPlugin\Form\Type\Shipping\Gateway\MondialRelayShippingGatewayType
+        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Gateway\MondialRelayShippingGatewayType
         tags:
             - { name: bitbag.shipping_gateway_configuration_type, type: "mondial_relay_shipping_gateway", label: "Mondial Relay Gateway" }
 
     app.event_listener.mondial_relay_shipping_export:
-      class: MagentixMondialRelayPlugin\EventListener\MondialRelayShippingExportEventListener
+      class: Magentix\SyliusMondialRelayPlugin\EventListener\MondialRelayShippingExportEventListener
       arguments:
-          - '@magentix_mondial_relay_plugin.repository.pickup'
+          - '@magentix_sylius_mondial_relay_plugin.repository.pickup'
           - '@doctrine.orm.entity_manager'
       tags:
           - { name: kernel.event_listener, event: 'bitbag.export_shipment', method: exportShipment }

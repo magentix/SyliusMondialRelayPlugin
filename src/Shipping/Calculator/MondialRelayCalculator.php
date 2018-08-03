@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace MagentixMondialRelayPlugin\Shipping\Calculator;
+namespace Magentix\SyliusMondialRelayPlugin\Shipping\Calculator;
 
 use MagentixPickupPlugin\Shipping\Calculator\CalculatorInterface;
-use MagentixMondialRelayPlugin\Repository\PickupRepository;
+use Magentix\SyliusMondialRelayPlugin\Repository\PickupRepository;
 use BitBag\SyliusShippingExportPlugin\Repository\ShippingGatewayRepository;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\AddressInterface;
@@ -183,7 +183,7 @@ final class MondialRelayCalculator implements CalculatorInterface
      */
     public function getPickupTemplate(): string
     {
-        return '@MagentixMondialRelayPlugin/checkout/SelectShipping/pickup/list.html.twig';
+        return '@MagentixSyliusMondialRelayPlugin/checkout/SelectShipping/pickup/list.html.twig';
     }
 
     /**
