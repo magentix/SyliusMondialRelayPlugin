@@ -15,7 +15,7 @@ use BitBag\SyliusShippingExportPlugin\Entity\ShippingExportInterface;
 use BitBag\SyliusShippingExportPlugin\Entity\ShippingGatewayInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface;
-use MagentixPickupPlugin\Entity\Shipment;
+use Magentix\SyliusPickupPlugin\Entity\Shipment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 

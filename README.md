@@ -29,8 +29,8 @@ public function registerBundles()
 {
     $bundles = [
         ...
-        new \MagentixPickupPlugin\MagentixPickupPlugin(),
         new \BitBag\SyliusShippingExportPlugin\BitBagSyliusShippingExportPlugin(),
+        new \Magentix\SyliusPickupPlugin\MagentixSyliusPickupPlugin(),
         new \Magentix\SyliusMondialRelayPlugin\MagentixSyliusMondialRelayPlugin(),
     ];
 }
@@ -43,8 +43,8 @@ Import required config in your `app/config/config.yml` file:
 
 imports:
     ...
-    - { resource: "@MagentixPickupPlugin/Resources/config/config.yml" }
     - { resource: "@BitBagSyliusShippingExportPlugin/Resources/config/config.yml" }
+    - { resource: "@MagentixSyliusPickupPlugin/Resources/config/config.yml" }
     - { resource: "@MagentixSyliusMondialRelayPlugin/Resources/config/config.yml" }
 ```
     
@@ -54,8 +54,8 @@ Import routing in your `app/config/routing.yml` file:
 # app/config/routing.yml
 ...
 
-magentix_pickup_plugin:
-    resource: "@MagentixPickupPlugin/Resources/config/routing.yml"
+magentix_sylius_pickup_plugin:
+    resource: "@MagentixSyliusPickupPlugin/Resources/config/routing.yml"
     
 bitbag_shipping_export_plugin:
     resource: "@BitBagSyliusShippingExportPlugin/Resources/config/routing.yml"
