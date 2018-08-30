@@ -2,62 +2,9 @@ parameters:
     bitbag.shipping_gateway.validation_groups: ['bitbag']
     bitbag.shipping_labels_path: '%kernel.root_dir%/../shipping_labels'
 
-services:
-    magentix_sylius_mondial_relay_plugin.repository.pickup:
-        class: Magentix\SyliusMondialRelayPlugin\Repository\PickupRepository
+imports:
+    - { resource: services/event_listener.yml }
+    - { resource: services/form.yml }
+    - { resource: services/component.yml }
+    - { resource: services/calculator.yml }
 
-    magentix_sylius_mondial_relay_shipping_rates.form.type.weight:
-        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\WeightType
-        public: true
-        tags:
-            - { name: form.type }
-
-    app.shipping_calculator.mondial_relay:
-        class: Magentix\SyliusMondialRelayPlugin\Shipping\Calculator\MondialRelayCalculator
-        arguments:
-            - '@magentix_sylius_mondial_relay_plugin.repository.pickup'
-            - '@bitbag.repository.shipping_gateway'
-        public: true
-        tags:
-            - { name: sylius.shipping_calculator, calculator: mondial_relay, form_type: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType, label: "Mondial Relay" }
-
-    app.form.type.shipping_calculator.magentix_mondial_relay:
-        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Calculator\MondialRelayConfigurationType
-        arguments:
-            - '@magentix_sylius_mondial_relay_shipping_rates.form.type.weight'
-        tags:
-            - { name: form.type }
-
-    app.form.type.mondial_relay_shipping_gateway:
-        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\Gateway\MondialRelayShippingGatewayType
-        tags:
-            - { name: bitbag.shipping_gateway_configuration_type, type: "mondial_relay_shipping_gateway", label: "Mondial Relay Gateway" }
-
-    app.event_listener.mondial_relay_shipping_export:
-      class: Magentix\SyliusMondialRelayPlugin\EventListener\MondialRelayShippingExportEventListener
-      arguments:
-          - '@magentix_sylius_mondial_relay_plugin.repository.pickup'
-          - '@doctrine.orm.entity_manager'
-      tags:
-          - { name: kernel.event_listener, event: 'bitbag.export_shipment', method: exportShipment }
-
-    magentix_sylius_mondial_relay_plugin.admin.shipping_gateway.update.javascripts:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@MagentixSyliusMondialRelayPlugin/admin/gateway/edit/javascript.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.bitbag.admin.shipping_gateway.update.javascripts, method: onBlockEvent }
-
-    magentix_sylius_mondial_relay_plugin.admin.shipping_gateway.create.javascripts:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@MagentixSyliusMondialRelayPlugin/admin/gateway/edit/javascript.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.bitbag.admin.shipping_gateway.create.javascripts, method: onBlockEvent }
-
-    magentix_sylius_mondial_relay_plugin.admin.layout.stylesheets:
-        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-        arguments:
-            - '@@MagentixSyliusMondialRelayPlugin/admin/stylesheets.html.twig'
-        tags:
-            - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.stylesheets, method: onBlockEvent }

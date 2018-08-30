@@ -1,0 +1,9 @@
+services:
+    magentix_sylius_mondial_relay_plugin.repository.pickup:
+        class: Magentix\SyliusMondialRelayPlugin\Repository\PickupRepository
+
+    magentix_sylius_mondial_relay_shipping_rates.form.type.weight:
+        class: Magentix\SyliusMondialRelayPlugin\Form\Type\Shipping\WeightType
+        public: true
+        tags:
+            - { name: form.type }
