@@ -1,0 +1,42 @@
+{#
+/**
+ * @author    Matthieu Vion
+ * @copyright 2018 Magentix
+ * @license   https://opensource.org/licenses/GPL-3.0 GNU General Public License version 3
+ * @link      https://github.com/magentix/mondial-relay-plugin
+ */
+#}
+<script>
+    var prefix = 'bitbag_shipping_gateway_config_config_';
+    var generate = $('#' + prefix + 'label_generate');
+
+    var labelFields = [
+        'label_size',
+        'label_shipper_company',
+        'label_shipper_street',
+        'label_shipper_city',
+        'label_shipper_postcode',
+        'label_shipper_country_code',
+        'label_shipper_phone_number',
+        'label_shipper_email'
+    ];
+
+    if (generate.val() === '0') {
+        $.each(labelFields, function(index, value) {
+            $('#' + prefix + value).parent('div').hide();
+        });
+    }
+
+    generate.change(function() {
+        var field = $(this);
+        $.each(labelFields, function(index, value) {
+            if (field.val() === '1') {
+                $('#' + prefix + value).parent('div').show();
+            } else {
+                $('#' + prefix + value).parent('div').hide();
+            }
+        });
+    });
+
+    $('.form-section').parent('div').addClass('line-top');
+</script>

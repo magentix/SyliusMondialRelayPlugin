@@ -32,7 +32,10 @@ final class MondialRelayShippingGatewayType extends AbstractType
                         'groups' => 'bitbag',
                     ]),
                 ],
-                'empty_data' => 'https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL'
+                'empty_data' => 'https://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL',
+                'attr' => [
+                    'class' => 'form-section'
+                ]
             ])
             ->add('api_company', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.api_company',
@@ -59,7 +62,7 @@ final class MondialRelayShippingGatewayType extends AbstractType
                         'groups' => 'bitbag',
                     ]),
                 ],
-                'empty_data' => 'PrivateK'
+                'empty_data' => 'PrivateK',
             ])
             ->add('pickup_number', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.pickup_number',
@@ -68,7 +71,10 @@ final class MondialRelayShippingGatewayType extends AbstractType
                         'groups' => 'bitbag',
                     ]),
                 ],
-                'empty_data' => '10'
+                'empty_data' => '10',
+                'attr' => [
+                    'class' => 'form-section'
+                ]
             ])
             ->add('product_weight', ChoiceType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.product_weight',
@@ -93,6 +99,9 @@ final class MondialRelayShippingGatewayType extends AbstractType
                     'mondial_relay.form.shipping_gateway.no'  => 0,
                     'mondial_relay.form.shipping_gateway.yes' => 1,
                 ],
+                'attr' => [
+                    'class' => 'form-section'
+                ]
             ])
             ->add('label_size', ChoiceType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_size',
@@ -109,59 +118,24 @@ final class MondialRelayShippingGatewayType extends AbstractType
             ])
             ->add('label_shipper_company', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_company',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
             ->add('label_shipper_street', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_street',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
             ->add('label_shipper_city', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_city',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
             ->add('label_shipper_postcode', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_postcode',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
             ->add('label_shipper_country_code', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_country_code',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
             ->add('label_shipper_phone_number', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_phone_number',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
             ->add('label_shipper_email', TextType::class, [
                 'label' => 'mondial_relay.form.shipping_gateway.label_shipper_email',
-                'constraints' => [
-                    new NotBlank([
-                        'groups' => 'bitbag',
-                    ]),
-                ],
             ])
         ;
     }

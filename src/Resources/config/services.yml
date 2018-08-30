@@ -40,3 +40,24 @@ services:
           - '@doctrine.orm.entity_manager'
       tags:
           - { name: kernel.event_listener, event: 'bitbag.export_shipment', method: exportShipment }
+
+    magentix_sylius_mondial_relay_plugin.admin.shipping_gateway.update.javascripts:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - '@@MagentixSyliusMondialRelayPlugin/admin/gateway/edit/javascript.html.twig'
+        tags:
+            - { name: kernel.event_listener, event: sonata.block.event.bitbag.admin.shipping_gateway.update.javascripts, method: onBlockEvent }
+
+    magentix_sylius_mondial_relay_plugin.admin.shipping_gateway.create.javascripts:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - '@@MagentixSyliusMondialRelayPlugin/admin/gateway/edit/javascript.html.twig'
+        tags:
+            - { name: kernel.event_listener, event: sonata.block.event.bitbag.admin.shipping_gateway.create.javascripts, method: onBlockEvent }
+
+    magentix_sylius_mondial_relay_plugin.admin.layout.stylesheets:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - '@@MagentixSyliusMondialRelayPlugin/admin/stylesheets.html.twig'
+        tags:
+            - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.stylesheets, method: onBlockEvent }
