@@ -9,11 +9,11 @@ mondial_relay:
             api_company: API Enseigne
             api_reference: API Référence
             api_key: API Clé
-            pickup_number: Nombre de Points Relais
-            product_weight: Poids des produits
+            pickup_number: Nombre de Points Relais à afficher
+            product_weight: Unité de poids des produits
             kilogram: Kilogramme
             gram: Gramme
-            label_generate: Générer l'étiquette
+            label_generate: Générer l'étiquette à l'export
             label_size: Taille de l'étiquette
             label_shipper_company: Société de l'expéditeur
             label_shipper_street: Rue de l'expéditeur

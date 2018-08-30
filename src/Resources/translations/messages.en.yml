@@ -9,11 +9,11 @@ mondial_relay:
             api_company: API Company
             api_reference: API Reference
             api_key: API Key
-            pickup_number: Number of pickup
-            product_weight: Product Weight
+            pickup_number: Number of pickup to display
+            product_weight: Product Weight Unit
             kilogram: Kilogram
             gram: Gram
-            label_generate: Generate label
+            label_generate: Generate label on export
             label_size: Label Size
             label_shipper_company: Shipper Company
             label_shipper_street: Shipper Street
