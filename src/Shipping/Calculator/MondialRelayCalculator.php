@@ -199,14 +199,14 @@ final class MondialRelayCalculator implements CalculatorInterface
 
         return [
             'id'         => join('-', $pickupId),
-            'company'    => $pickup->LgAdr1,
-            'street_1'   => $pickup->LgAdr3,
-            'street_2'   => $pickup->LgAdr4,
-            'city'       => $pickup->Ville,
+            'company'    => strtoupper($pickup->LgAdr1),
+            'street_1'   => strtolower($pickup->LgAdr3),
+            'street_2'   => strtolower($pickup->LgAdr4),
+            'city'       => strtoupper($pickup->Ville),
             'country'    => $pickup->Pays,
             'postcode'   => $pickup->CP,
-            'latitude'   => $pickup->Latitude,
-            'longitude'  => $pickup->Longitude
+            'latitude'   => preg_replace('/,/', '.', $pickup->Latitude),
+            'longitude'  => preg_replace('/,/', '.', $pickup->Longitude)
         ];
     }
 

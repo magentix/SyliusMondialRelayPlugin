@@ -29,14 +29,25 @@
             {% if list.error %}
                 <p class="ui red label">{{ list.error | trans }}</p>
             {% else %}
+                <script>
+                    var locations = [];
+                </script>
+                <div id="pickup-map" class="pickup-map"></div>
                 <ul class="ui radio checkbox list">
                     {% for pickup in list.pickup %}
                         <li>
-                            <input type="radio" name="sylius_checkout_select_shipping[shipments][{{ method.index }}][pickup_id]" value="{{ pickup.id }}" id="pickup_{{ pickup.id }}"{% if (method.pickup.current_id == pickup.id) %} checked{% endif %}/>
-                            <label for="pickup_{{ pickup.id }}"><strong>{{ pickup.company }}</strong> - {{ pickup.street_1 }} {{ pickup.postcode }} {{ pickup.city }}</label>
+                            <input type="radio" name="sylius_checkout_select_shipping[shipments][{{ method.index }}][pickup_id]" value="{{ pickup.id }}" id="pickup_{{ pickup.id }}"{% if (method.pickup.current_id == pickup.id) %} checked{% endif %} onclick="map.update(this.id)" />
+                            <label for="pickup_{{ pickup.id }}"><strong>{{ pickup.company }}</strong> - {{ pickup.street_1 }} - {{ pickup.postcode }} {{ pickup.city }}</label>
+                            <script>
+                                locations.push(["<strong>{{ pickup.company }}</strong><br />{{ pickup.street_1 }}<br />{{ pickup.postcode }} {{ pickup.city }}", "{{ pickup.latitude }}", "{{ pickup.longitude }}", "pickup_{{ pickup.id }}"]);
+                            </script>
                         </li>
                     {% endfor %}
                 </ul>
+                <script>
+                    var map = new mapOsmClass({'mapId': 'pickup-map'});
+                    map.locations(locations);
+                </script>
             {% endif %}
         </div>
     </div>
