@@ -17,7 +17,7 @@ With over 40 million parcels delivered through its network of 6500 pick-up point
 ## Installation
 
 ```bash
-$ composer require magentix/mondial-relay-plugin
+$ composer require magentix/sylius-mondial-relay-plugin
 ```
 
 Add plugin dependencies to your `AppKernel.php` file:
