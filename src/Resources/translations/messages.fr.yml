@@ -26,6 +26,15 @@ mondial_relay:
             yes: Oui
     pickup:
         list:
+            opening:
+                monday: Lundi
+                tuesday: Mardi
+                wednesday: Mercredi
+                thursday: Jeudi
+                friday: Vendredi
+                saturday: Samedi
+                sunday: Dimanche
+                closed: Fermé
             error:
                 empty: Aucun Point Relais n'a été trouvé à proximité de l'adresse indiquée
                 max_size: Le poids maximum de 150kg a été atteint. Merci de sélectionner une autre méthode de livraison.

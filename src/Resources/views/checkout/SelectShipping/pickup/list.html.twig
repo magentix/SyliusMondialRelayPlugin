@@ -31,22 +31,39 @@
             {% else %}
                 <script>
                     var locations = [];
+                    var selected  = null;
                 </script>
                 <div id="pickup-map" class="pickup-map"></div>
                 <ul class="ui radio checkbox list">
                     {% for pickup in list.pickup %}
-                        <li>
-                            <input type="radio" name="sylius_checkout_select_shipping[shipments][{{ method.index }}][pickup_id]" value="{{ pickup.id }}" id="pickup_{{ pickup.id }}"{% if (method.pickup.current_id == pickup.id) %} checked{% endif %} onclick="map.update(this.id)" />
-                            <label for="pickup_{{ pickup.id }}"><strong>{{ pickup.company }}</strong> - {{ pickup.street_1 }} - {{ pickup.postcode }} {{ pickup.city }}</label>
-                            <script>
-                                locations.push(["<strong>{{ pickup.company }}</strong><br />{{ pickup.street_1 }}<br />{{ pickup.postcode }} {{ pickup.city }}", "{{ pickup.latitude }}", "{{ pickup.longitude }}", "pickup_{{ pickup.id }}"]);
-                            </script>
+                        <li class="item pickup-item">
+                            <div class="content">
+                                <input type="radio" name="sylius_checkout_select_shipping[shipments][{{ method.index }}][pickup_id]" value="{{ pickup.id }}" id="pickup_{{ pickup.id }}"{% if (method.pickup.current_id == pickup.id) %} checked{% endif %} onclick="map.update(this.id)" />
+                                <label for="pickup_{{ pickup.id }}"><strong>{{ pickup.company }}</strong> - {{ pickup.street_1 }} - {{ pickup.postcode }} {{ pickup.city }}</label>
+                                <ul class="ui list pickup-additional-data" id="pickup_{{ pickup.id }}_additional" style="display:none">
+                                    {% for day, opening in pickup.opening %}
+                                        <li class="item">
+                                            <strong>{{ ('mondial_relay.pickup.list.opening.' ~ day) | trans }} :</strong>
+                                            {{ opening ?: 'mondial_relay.pickup.list.opening.closed' | trans }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <script>
+                                    locations.push(["<strong>{{ pickup.company }}</strong><br />{{ pickup.street_1 }}<br />{{ pickup.postcode }} {{ pickup.city }}", "{{ pickup.latitude }}", "{{ pickup.longitude }}", "pickup_{{ pickup.id }}"]);
+                                    {% if (method.pickup.current_id == pickup.id) %}
+                                        selected = "pickup_{{ pickup.id }}";
+                                    {% endif %}
+                                </script>
+                            </div>
                         </li>
                     {% endfor %}
                 </ul>
                 <script>
                     var map = new mapOsmClass({'mapId': 'pickup-map'});
                     map.locations(locations);
+                    if (selected) {
+                        map.update(selected);
+                    }
                 </script>
             {% endif %}
         </div>

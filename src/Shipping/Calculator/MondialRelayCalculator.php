@@ -206,7 +206,16 @@ final class MondialRelayCalculator implements CalculatorInterface
             'country'    => $pickup->Pays,
             'postcode'   => $pickup->CP,
             'latitude'   => preg_replace('/,/', '.', $pickup->Latitude),
-            'longitude'  => preg_replace('/,/', '.', $pickup->Longitude)
+            'longitude'  => preg_replace('/,/', '.', $pickup->Longitude),
+            'opening'    => [
+                'monday'    => $this->formatOpening($pickup->Horaires_Lundi),
+                'tuesday'   => $this->formatOpening($pickup->Horaires_Mardi),
+                'wednesday' => $this->formatOpening($pickup->Horaires_Mercredi),
+                'thursday'  => $this->formatOpening($pickup->Horaires_Jeudi),
+                'friday'    => $this->formatOpening($pickup->Horaires_Vendredi),
+                'saturday'  => $this->formatOpening($pickup->Horaires_Samedi),
+                'sunday'    => $this->formatOpening($pickup->Horaires_Dimanche)
+            ]
         ];
     }
 
@@ -228,5 +237,41 @@ final class MondialRelayCalculator implements CalculatorInterface
         }
 
         return $shippingCode;
+    }
+
+    /**
+     * Format opening day
+     *
+     * @param stdClass $opening
+     * @return string
+     */
+    public function formatOpening(stdClass $opening): string
+    {
+        $date = '';
+
+        if ($opening) {
+            foreach ($opening as $hour) {
+                if (intval($hour[0]) && intval($hour[1])) {
+                    $date .= $this->formatHour($hour[0]) . ' - ' . $this->formatHour($hour[1]);
+                }
+
+                if (intval($hour[2]) && intval($hour[3])) {
+                    $date .= ($date ? ' / ' : '') . $this->formatHour($hour[2]) . ' - ' . $this->formatHour($hour[3]);
+                }
+            }
+        }
+
+        return $date;
+    }
+
+    /**
+     * Format hour
+     *
+     * @param string $hour
+     * @return string
+     */
+    public function formatHour(string $hour): string
+    {
+        return substr($hour, 0, 2) . 'h' . substr($hour, 2, 2);
     }
 }
