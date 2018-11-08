@@ -1,8 +1,30 @@
-## Features
+<h1 align="center">
+    <img src="doc/images/mondial-relay-sylius.png" alt="Mondial Relay for Sylius"/>
+    <br />
+    <a href="https://packagist.org/packages/magentix/sylius-mondial-relay-plugin" target="_blank">
+        <img src="https://poser.pugx.org/magentix/sylius-mondial-relay-plugin/v/stable" />
+    </a>
+    <a href="https://packagist.org/packages/magentix/sylius-mondial-relay-plugin" target="_blank">
+        <img src="https://poser.pugx.org/magentix/sylius-mondial-relay-plugin/downloads" />
+    </a>
+    <a href="https://packagist.org/packages/magentix/sylius-mondial-relay-plugin" target="_blank">
+        <img src="https://poser.pugx.org/magentix/sylius-mondial-relay-plugin/license" />
+    </a>
+</h1>
+
+# SyliusMondialRelayPlugin
 
 This Plugin allows to add the Mondial Relay delivery method to Sylius.
 
+## Features
+
 * Mondial Relay Pick-up delivery up to 150kg (24R, 24L, DRI)
+
+* Pick-up location in France, Belgium, Luxembourg, Germany and Spain
+
+* On-map or on-list pick-up selection
+
+* Configurable shipping rates based on weight
 
 * Direct shipping management through Mondial Relay web services (shipments registration, shipping labels downloading)
 
