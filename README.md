@@ -42,8 +42,53 @@ Open [sylius.magentix.fr/demo-shipping](https://sylius.magentix.fr/demo-shipping
 
 ## Installation
 
+### Sylius >= 1.3.0
+
 ```bash
-$ composer require magentix/sylius-mondial-relay-plugin
+$ composer require magentix/sylius-mondial-relay-plugin:^1.3
+```
+    
+Add the plugins to the `config/bundles.php` file:
+
+```php
+BitBag\SyliusShippingExportPlugin\BitBagSyliusShippingExportPlugin::class => ['all' => true],
+Magentix\SyliusPickupPlugin\MagentixSyliusPickupPlugin::class => ['all' => true],
+Magentix\SyliusMondialRelayPlugin\MagentixSyliusMondialRelayPlugin::class => ['all' => true],
+```
+
+Add the plugin's config by creating the file `config/packages/magentix_sylius_mondial_relay_plugin.yaml` with the following content:
+
+```yaml
+imports:
+    - { resource: "@BitBagSyliusShippingExportPlugin/Resources/config/config.yml" }
+    - { resource: "@MagentixSyliusPickupPlugin/Resources/config/config.yml" }
+    - { resource: "@MagentixSyliusMondialRelayPlugin/Resources/config/config.yml" }
+```
+    
+Add the plugin's routing by creating the file `config/routes/magentix_sylius_mondial_relay_plugin.yaml` with the following content:
+
+```yaml
+magentix_sylius_pickup_plugin:
+    resource: "@MagentixSyliusPickupPlugin/Resources/config/routing.yml"
+    
+bitbag_shipping_export_plugin:
+    resource: "@BitBagSyliusShippingExportPlugin/Resources/config/routing.yml"
+    prefix: /admin
+```
+
+Finish the installation by updating the database schema and installing assets:
+
+```bash
+bin/console doctrine:migrations:diff
+bin/console doctrine:migrations:migrate
+bin/console assets:install
+bin/console sylius:theme:assets:install
+```
+
+### Sylius < 1.3.0
+
+```bash
+$ composer require magentix/sylius-mondial-relay-plugin:^1.2
 ```
 
 Add plugin dependencies to your `AppKernel.php` file:
