@@ -51,7 +51,7 @@ $ composer require magentix/sylius-mondial-relay-plugin:^1.3
 Add the plugins to the `config/bundles.php` file:
 
 ```php
-BitBag\SyliusShippingExportPlugin\BitBagSyliusShippingExportPlugin => ['all' => true],
+BitBag\SyliusShippingExportPlugin\BitBagSyliusShippingExportPlugin::class => ['all' => true],
 Magentix\SyliusPickupPlugin\MagentixSyliusPickupPlugin::class => ['all' => true],
 Magentix\SyliusMondialRelayPlugin\MagentixSyliusMondialRelayPlugin::class => ['all' => true],
 ```
