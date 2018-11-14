@@ -45,7 +45,7 @@ Open [sylius.magentix.fr/demo-shipping](https://sylius.magentix.fr/demo-shipping
 ### Sylius >= 1.3.0
 
 ```bash
-$ composer require magentix/sylius-mondial-relay-plugin:^1.3
+$ composer require magentix/sylius-mondial-relay-plugin:^1.3.0
 ```
     
 Add the plugins to the `config/bundles.php` file:
@@ -88,7 +88,7 @@ bin/console sylius:theme:assets:install
 ### Sylius < 1.3.0
 
 ```bash
-$ composer require magentix/sylius-mondial-relay-plugin:^1.2
+$ composer require magentix/sylius-mondial-relay-plugin:^1.2.0
 ```
 
 Add plugin dependencies to your `AppKernel.php` file:
