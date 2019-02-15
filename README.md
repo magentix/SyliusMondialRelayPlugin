@@ -32,10 +32,6 @@ This Plugin allows to add the Mondial Relay delivery method to Sylius.
 
 With over 40 million parcels delivered through its network of 6500 pick-up points in France (and more than 36000 in Europe) and home delivery services, Mondial Relay is a major actor of delivery to companies and individuals. Thousands of merchants use their services as well as the total control of the logistics process that Mondial Relay offers.
 
-## Demo
-
-Open [sylius.magentix.fr/demo-shipping](https://sylius.magentix.fr/demo-shipping) for a demonstration.
-
 ## Screenshot
 
 ![Alt text](doc/images/shipping.png "Mondial Relay Shipping Method")
